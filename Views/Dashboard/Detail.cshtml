@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+    <title>Bright Idea</title>
+</head>
+<body>
+    <div class="container-fluid mb-5">
+        <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+            <a class="navbar-brand" href="/dashboard">BrightIdea</a>
+            <!-- Links -->
+            <ul class="navbar-nav">
+                <!-- Greeting user msg -->
+                <li class="nav-item">
+                    <a class="nav-link">Hello @ViewBag.LogUser.Name</a>
+                </li>
+            </ul>
+            <div class="ml-auto">
+                <ul>
+                    <li class="nav-item float-right">
+                        <a class="nav-link text-white float-right" href="/logout">Log off</a>
+                    </li>
+                </ul>  
+            </div> 
+        </nav>
+        <div class="container mt-5">
+            <span>@ViewBag.Post.User.Name says:</span>
+            <div class="container border my-3">
+                @ViewBag.Post.PostContent
+            </div>
+        </div>
+        <div class="container mt-3 mx-auto">
+            <h4>People who liked this post:</h4>
+            <table class="table">
+                <thead class="thead-dark">
+                    <tr>
+                        <th scope="col">Alias</th>
+                        <th scope="col">Name</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var user in @ViewBag.Users)
+                    {
+                        <tr>
+                            <td>
+                                <a asp-action="UserDetail" asp-controller="Dashboard" asp-route-id="@ViewBag.Post.User.UserId">@user.Alias</a>
+                            </td>
+                            <td>@user.Name</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</body>

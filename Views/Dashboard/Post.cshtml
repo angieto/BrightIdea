@@ -1,0 +1,8 @@
+@model Belt.Models.Post
+<form class="form-group d-flex align-items-center flex-column justify-content-center" asp-action="AddPost" asp-controller="Dashboard" method="post">
+    <span class="text-danger mt-3" asp-validation-for="PostContent"></span>
+    <input type="text" class="form-control mt-3" asp-for="PostContent" placeholder="What's in your mind...">
+    <input type="hidden" asp-for="UserId" value="@ViewBag.LogUser.UserId">
+    <input type="hidden" asp-for="LikeAmount" value="0">
+    <button type="submit" class="btn btn-info">Idea!</button>
+</form>

@@ -1,0 +1,11 @@
+C:\Users\angie\Desktop\coding-dojo\c#\ORMS\Belt\bin\Debug\netcoreapp2.0\Belt.deps.json
+C:\Users\angie\Desktop\coding-dojo\c#\ORMS\Belt\bin\Debug\netcoreapp2.0\Belt.runtimeconfig.json
+C:\Users\angie\Desktop\coding-dojo\c#\ORMS\Belt\bin\Debug\netcoreapp2.0\Belt.runtimeconfig.dev.json
+C:\Users\angie\Desktop\coding-dojo\c#\ORMS\Belt\bin\Debug\netcoreapp2.0\Belt.dll
+C:\Users\angie\Desktop\coding-dojo\c#\ORMS\Belt\bin\Debug\netcoreapp2.0\Belt.pdb
+C:\Users\angie\Desktop\coding-dojo\c#\ORMS\Belt\obj\Debug\netcoreapp2.0\Belt.csprojAssemblyReference.cache
+C:\Users\angie\Desktop\coding-dojo\c#\ORMS\Belt\obj\Debug\netcoreapp2.0\Belt.csproj.CoreCompileInputs.cache
+C:\Users\angie\Desktop\coding-dojo\c#\ORMS\Belt\obj\Debug\netcoreapp2.0\Belt.AssemblyInfoInputs.cache
+C:\Users\angie\Desktop\coding-dojo\c#\ORMS\Belt\obj\Debug\netcoreapp2.0\Belt.AssemblyInfo.cs
+C:\Users\angie\Desktop\coding-dojo\c#\ORMS\Belt\obj\Debug\netcoreapp2.0\Belt.dll
+C:\Users\angie\Desktop\coding-dojo\c#\ORMS\Belt\obj\Debug\netcoreapp2.0\Belt.pdb

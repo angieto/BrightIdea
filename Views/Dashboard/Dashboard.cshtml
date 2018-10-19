@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.4.1/css/all.css" integrity="sha384-5sAR7xN1Nv6T6+dT2mhtzEpVJvfS3NScPQTrOxhwjIuvcA67KV2R5Jz6kr4abQsz" crossorigin="anonymous">
+    <title>Bright Idea</title>
+</head>
+<body>
+    <div class="container-fluid mb-5">
+        <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
+            <a class="navbar-brand" href="/dashboard">BrightIdea</a>
+            <!-- Links -->
+            <ul class="navbar-nav">
+                <!-- Greeting user msg -->
+                <li class="nav-item">
+                    <a class="nav-link">Hello @ViewBag.LogUser.Name</a>
+                </li>
+            </ul>
+            <div class="ml-auto">
+                <ul>
+                    <li class="nav-item float-right">
+                        <a class="nav-link text-white float-right" href="/logout">Log off</a>
+                    </li>
+                </ul>  
+            </div> 
+        </nav>
+        <div class="container mx-auto mt-5">
+            <!-- Post idea here -->
+            <div class="container">
+                @await Html.PartialAsync("Post.cshtml")
+            </div>
+            <!-- Display posts here -->
+            @foreach (var post in @ViewBag.AllPosts)
+            {
+                <div class="container mx-auto mt-4">
+                    <span>
+                        <a asp-action="UserDetail" asp-controller="Dashboard" asp-route-id="@post.User.UserId">@post.User.Name</a> says
+                    </span>
+                    <div class="container border mt-2">
+                        <p>@post.PostContent</p>
+                    </div>
+                    <div class="container">
+                        @model Belt.Models.Like
+                        <!-- A "like" button that contents the PostId -->
+                        <form asp-action="AddLike" asp-controller="Dashboard" method="post">
+                            <input type="hidden" asp-for="UserId"  value="@ViewBag.LogUser.UserId">
+                            <input type="hidden" asp-for="PostId" value="@post.PostId">
+                            <input type="submit" class="btn btn-light mt-5" value="Like">
+                        </form>
+                        <!-- Display number of ppl who like the post -->
+                        <div class="container col-5">
+                            <p>
+                                <a asp-action="PostDetail" asp-controller="Dashboard" asp-route-id="@post.PostId">@post.Likes.Count</a> ppl like this
+                            </p>
+                        </div>    
+                        <!-- If it's the user's own post -> delete -->
+                        @if (@ViewBag.LogUser.UserId == @post.User.UserId)
+                        {
+                            <form asp-action="Remove" asp-controller="Dashboard" asp-route-id="@post.PostId" method="post">
+                                <button type="submit" class="btn btn-danger">Remove</button>
+                            </form>
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+</body>
+</html>
