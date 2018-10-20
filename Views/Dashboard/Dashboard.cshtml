@@ -28,45 +28,64 @@
                 </ul>  
             </div> 
         </nav>
-        <div class="container mx-auto mt-5">
+        <div class="container mx-auto">
             <!-- Post idea here -->
-            <div class="container">
+            <div class="container mx-auto my-5">
                 @await Html.PartialAsync("Post.cshtml")
             </div>
+            <hr>
             <!-- Display posts here -->
-            @foreach (var post in @ViewBag.AllPosts)
-            {
-                <div class="container mx-auto mt-4">
-                    <span>
-                        <a asp-action="UserDetail" asp-controller="Dashboard" asp-route-id="@post.User.UserId">@post.User.Name</a> says
-                    </span>
-                    <div class="container border mt-2">
-                        <p>@post.PostContent</p>
+            <div class="container">
+                @foreach (var post in @ViewBag.AllPosts)
+                {
+                    <div class="container row my-3">
+                        <!-- Main post -->
+                        <div class="container col-7">
+                            <!-- Post owner -->
+                            <div class="container d-flex align-items-center justify-content-between">
+                                <div class="my-2" >
+                                    <a asp-action="UserDetail" asp-controller="Dashboard" asp-route-id="@post.User.UserId">@post.User.Name</a> says
+                                </div>                            
+                                <!-- Remove button, only display when the post belongs to the user -->
+                                @if (@ViewBag.LogUser.UserId == @post.User.UserId)
+                                {
+                                    <form asp-action="Remove" asp-controller="Dashboard" asp-route-id="@post.PostId" method="post">
+                                        <button type="submit" class="btn btn-link">Remove</button>
+                                    </form>
+                                }
+                            </div>
+
+                            <!-- Post content -->
+                            <div class="container">
+                                <div class="container border rounded">
+                                    <p>@post.PostContent</p>
+                                </div>
+                            </div>
+
+                        </div>
+                        <!-- Sub post -->
+                        <div class="container row col-5 d-flex align-items-end">
+                            <div class="d-flex align-items-center flex-grow-1">
+                                <!-- Like button -->
+                                <div class="container col-4">
+                                    @model Belt.Models.Like
+                                    <!-- A "like" button that contents the PostId -->
+                                    <form asp-action="AddLike" asp-controller="Dashboard" method="post">
+                                        <input type="hidden" asp-for="UserId"  value="@ViewBag.LogUser.UserId">
+                                        <input type="hidden" asp-for="PostId" value="@post.PostId">
+                                        <input type="submit" class="btn btn-dark" value="Like">
+                                    </form>
+                                </div>
+                                <!-- Like amount -->
+                                <div class="container col-8">
+                                    <a asp-action="PostDetail" asp-controller="Dashboard" asp-route-id="@post.PostId">@post.Likes.Count</a> ppl like this
+                                </div>
+                            </div>
+                        </div>       
                     </div>
-                    <div class="container">
-                        @model Belt.Models.Like
-                        <!-- A "like" button that contents the PostId -->
-                        <form asp-action="AddLike" asp-controller="Dashboard" method="post">
-                            <input type="hidden" asp-for="UserId"  value="@ViewBag.LogUser.UserId">
-                            <input type="hidden" asp-for="PostId" value="@post.PostId">
-                            <input type="submit" class="btn btn-light mt-5" value="Like">
-                        </form>
-                        <!-- Display number of ppl who like the post -->
-                        <div class="container col-5">
-                            <p>
-                                <a asp-action="PostDetail" asp-controller="Dashboard" asp-route-id="@post.PostId">@post.Likes.Count</a> ppl like this
-                            </p>
-                        </div>    
-                        <!-- If it's the user's own post -> delete -->
-                        @if (@ViewBag.LogUser.UserId == @post.User.UserId)
-                        {
-                            <form asp-action="Remove" asp-controller="Dashboard" asp-route-id="@post.PostId" method="post">
-                                <button type="submit" class="btn btn-danger">Remove</button>
-                            </form>
-                        }
-                    </div>
-                </div>
-            }
+                }
+            </div>
+            
         </div>
     </div>
 </body>

@@ -21,5 +21,6 @@ namespace Belt
             WebHost.CreateDefaultBuilder(args)
                 .UseStartup<Startup>()
                 .Build();
+                
     }
 }

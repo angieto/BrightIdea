@@ -67,13 +67,6 @@ namespace Belt.Controllers
         [HttpPost("/like")]
         public IActionResult AddLike(Like like)
         {
-
-            // if the user has already liked the post, return error
-            // if (dbContext.Likes.Any(l => l.UserId == like.UserId))
-            // {
-            //     // ViewBag.Error = "A good idea can only be liked once!";
-            //     return RedirectToAction("Dashboard");
-            // }
             // Select the post to update its LikeAmount
             Post SelectedPost = dbContext.Posts.FirstOrDefault(p => p.PostId == like.PostId);
             SelectedPost.LikeAmount = SelectedPost.LikeAmount + 1;
@@ -93,25 +86,39 @@ namespace Belt.Controllers
         [HttpGet("post/{id}")]
         public IActionResult PostDetail(int id)
         {
-            int? UserId = HttpContext.Session.GetInt32("UserId");
-            User LogUser = dbContext.Users.FirstOrDefault(user => user.UserId == UserId);
-            ViewBag.LogUser = LogUser;
-            Post SelectedPost = dbContext.Posts.Include(p => p.User).Include(p => p.Likes).ThenInclude(l => l.User).FirstOrDefault(p => p.PostId == id);
-            ViewBag.Post = SelectedPost;
-            List<User> Users = SelectedPost.Likes.Select(l => l.User).Distinct().ToList();
-            ViewBag.Users = Users;
-            return View("Detail");
+            if (HttpContext.Session.GetInt32("UserId") == null) 
+            {
+                return RedirectToAction("Main", "Home");
+            } 
+            else 
+            {
+                int? UserId = HttpContext.Session.GetInt32("UserId");
+                User LogUser = dbContext.Users.FirstOrDefault(user => user.UserId == UserId);
+                ViewBag.LogUser = LogUser;
+                Post SelectedPost = dbContext.Posts.Include(p => p.User).Include(p => p.Likes).ThenInclude(l => l.User).FirstOrDefault(p => p.PostId == id);
+                ViewBag.Post = SelectedPost;
+                List<User> Users = SelectedPost.Likes.Select(l => l.User).Distinct().ToList();
+                ViewBag.Users = Users;
+                return View("Detail");
+            }
         }
 
         [HttpGet("user/{id}")]
         public IActionResult UserDetail(int id)
         {
-            int? UserId = HttpContext.Session.GetInt32("UserId");
-            User LogUser = dbContext.Users.FirstOrDefault(user => user.UserId == UserId);
-            ViewBag.LogUser = LogUser;
-            User SelectedUser = dbContext.Users.Include(u => u.Posts).Include(u => u.Likes).FirstOrDefault(u => u.UserId == id);
-            ViewBag.User = SelectedUser;
-            return View("User");
+            if (HttpContext.Session.GetInt32("UserId") == null) 
+            {
+                return RedirectToAction("Main", "Home");
+            } 
+            else 
+            {
+                int? UserId = HttpContext.Session.GetInt32("UserId");
+                User LogUser = dbContext.Users.FirstOrDefault(user => user.UserId == UserId);
+                ViewBag.LogUser = LogUser;
+                User SelectedUser = dbContext.Users.Include(u => u.Posts).Include(u => u.Likes).FirstOrDefault(u => u.UserId == id);
+                ViewBag.User = SelectedUser;
+                return View("User");
+            }
         }
     }
 }
